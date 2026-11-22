@@ -5,12 +5,16 @@ import matplotlib.animation as animator
 x_extent = 2
 y_extent = 1.5
 spacing = .2
+n_frames = 90
 
 
 def smoothfunc(t):
    return t * t * (3 - 2*t)
 
-def plane(x_extent, y_extent, spacing, resolution, colors = True, polar = False):
+def plane(x_extent, y_extent, spacing, resolution, colors = True, polar = False, wide = True):
+   if wide:
+      x_extent = 2*x_extent
+      y_extent = 2*y_extent
    if colors:
       blue = "tab:blue"
       red = "tab:red"
@@ -64,22 +68,27 @@ def plane(x_extent, y_extent, spacing, resolution, colors = True, polar = False)
    return grid
 
 def f(z):
-   return z**2
+   return z**3
 
 grid = plane(x_extent, y_extent, spacing, 900)
 
 fig, ax = plt.subplots(figsize=(11, 11))
-ax.set_aspect("equal")
-ax.set_xlim(-x_extent, x_extent)
-ax.set_ylim(-y_extent, y_extent)
-ax.axhline(0, color="gray", lw=0.5)
-ax.axvline(0, color="gray", lw=0.5)
-ax.set_xlabel("Re")
-ax.set_ylabel("Im")
 
-for z, color in grid:
-   z = f(z)
-   ax.plot(z.real, z.imag, color=color, lw=1.0)
+def updater(frame): #this function updates each frame
+   t = frame / (n_frames - 1)
+   ax.clear()
+   ax.set_aspect("equal")
+   ax.set_xlim(-x_extent, x_extent)
+   ax.set_ylim(-y_extent, y_extent)
+   ax.axhline(0, color="gray", lw=0.5)
+   ax.axvline(0, color="gray", lw=0.5)
+   ax.set_xlabel("Re")
+   ax.set_ylabel("Im")
+
+   for z, color in grid:
+      z = z + smoothfunc(t)*(f(z) - z)
+      ax.plot(z.real, z.imag, color=color, lw=1.0)
 
 
+anim = animator.FuncAnimation(fig, updater, frames = n_frames, interval = 33)
 plt.show()
