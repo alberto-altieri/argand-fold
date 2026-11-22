@@ -3,7 +3,7 @@ Visualizer showing how complex functions warp the argand-gauss plane
 
 ## Features
 The script is now able to show an animation of the warping the complex function does
-The complex function is defined inside the ```python f(z)``` function
+The complex function is defined inside the ```f(z)``` function
 
 > [!important]
 > This is simply a dumb test version
