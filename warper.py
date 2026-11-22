@@ -11,10 +11,10 @@ n_frames = 90
 def smoothfunc(t):
    return t * t * (3 - 2*t)
 
-def plane(x_extent, y_extent, spacing, resolution, colors = True, polar = False, wide = True, unitCircle = False):
+def plane(x_extent, y_extent, spacing, resolution, colors = True, polar = False, wide = 2, unitCircle = False):
    if wide:
-      x_extent = 2*x_extent
-      y_extent = 2*y_extent
+      x_extent = wide*x_extent
+      y_extent = wide*y_extent
    if colors:
       blue = "tab:blue"
       red = "tab:red"
@@ -72,7 +72,7 @@ def plane(x_extent, y_extent, spacing, resolution, colors = True, polar = False,
    return grid
 
 def f(z):
-   return 1j*z**2
+   return 1/z
 
 grid = plane(x_extent, y_extent, spacing, 900, unitCircle=True)
 
@@ -95,5 +95,5 @@ def updater(frame): #this function updates each frame
 
 
 anim = animator.FuncAnimation(fig, updater, frames = n_frames, interval = 33)
-anim.save("gallery/warped.gif", writer="pillow", fps=30)
+anim.save("gallery/(z)^-1.gif", writer="pillow", fps=30)
 #plt.show()
