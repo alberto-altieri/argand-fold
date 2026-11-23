@@ -11,4 +11,9 @@ The complex function is defined inside the ```f(z)``` function
 
 
 ## Examples
-![warp](gallery/(z)^-1.gif)
+
+### 1/z
+![1overz](gallery/(z)^-1.gif)
+
+### log(z)
+![logz](gallery/wide_log(z).gif)

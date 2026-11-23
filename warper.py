@@ -5,7 +5,7 @@ import matplotlib.animation as animator
 x_extent = 2
 y_extent = 1.5
 spacing = .2
-n_frames = 90
+n_frames = 180
 
 
 def smoothfunc(t):
@@ -72,11 +72,25 @@ def plane(x_extent, y_extent, spacing, resolution, colors = True, polar = False,
    return grid
 
 def f(z):
-   return 1/z
+   return np.log(z)
 
-grid = plane(x_extent, y_extent, spacing, 900, unitCircle=True)
+grid = plane(x_extent, y_extent, spacing, 2000, unitCircle=True, wide = 5)
 
 fig, ax = plt.subplots(figsize=(11, 11))
+
+def singleframe(): #this function only draws the final frame
+   ax.clear()
+   ax.set_aspect("equal")
+   ax.set_xlim(-x_extent, x_extent)
+   ax.set_ylim(-y_extent, y_extent)
+   ax.axhline(0, color="gray", lw=0.5)
+   ax.axvline(0, color="gray", lw=0.5)
+   ax.set_xlabel("Re")
+   ax.set_ylabel("Im")
+
+   for z, color in grid:
+      z = f(z)
+      ax.plot(z.real, z.imag, color=color, lw=1.0)
 
 def updater(frame): #this function updates each frame
    t = frame / (n_frames - 1)
@@ -91,9 +105,17 @@ def updater(frame): #this function updates each frame
 
    for z, color in grid:
       z = z + smoothfunc(t)*(f(z) - z)
+      #z = z * (f(z) / z) ** t
       ax.plot(z.real, z.imag, color=color, lw=1.0)
 
 
 anim = animator.FuncAnimation(fig, updater, frames = n_frames, interval = 33)
-anim.save("gallery/(z)^-1.gif", writer="pillow", fps=30)
-#plt.show()
+#anim.save("gallery/videos/wide_log(z).mp4", writer="ffmpeg", fps=30)
+print("video is exported!")
+anim.save("gallery/gifs/wide_log(z).gif", writer="pillow", fps=30)
+print("gif is exported!")
+
+singleframe()
+plt.show()
+
+print("done!")
