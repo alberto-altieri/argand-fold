@@ -13,7 +13,7 @@ The complex function is defined inside the ```f(z)``` function
 ## Examples
 
 ### 1/z
-![1overz](gallery/(z)^-1.gif)
+![1overz](gallery/gifs/(z)^-1.gif)
 
 ### log(z)
-![logz](gallery/wide_log(z).gif)
+![logz](gallery/gifs/wide_log(z).gif)
